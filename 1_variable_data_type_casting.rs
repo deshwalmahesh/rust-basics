@@ -2,13 +2,13 @@
 // main() is the entry point for the code
 
 fn show_variable_property(){
-    // u32, &str, i32 etc etc are data types. You can provide them or the program will automatically infer these too
+    // u8, i16, f32, char, &str etc etc are data types. You can provide them or the program will automatically infer these too
 
     let immut_var = 15; // This is Immutable Variable means it's value can't be changed. By default every variable is immutable
     // immutVar = 45; This will Give Error as you can't change it's value
     let immut_var = "Hello World"; // You can assume that this this is a new Variable or Memory address so you can change the data types too
 
-    let mut mut_var: i32 = 32; // This is Mutable variable it means you can change it's value 
+    let mut mut_var: i32 = 32; // This is Mutable variable it means you can change it's value. We are explicitely telling that it's of type "i32"
     mut_var = 52; // This works as long as the data type is same. It's the same Variable and same Memory
     // mutVar = "This will give error as you can not change data types";
 

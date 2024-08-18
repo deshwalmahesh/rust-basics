@@ -1,4 +1,4 @@
-// Show Working of Loops and Control Statement
+// Show Working of Loops (with continue and break) and Control (if-else) Statement
 
 fn for_loop(){
     // Loop from 1 to 5 (EXCLUDE "5")

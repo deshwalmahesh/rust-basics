@@ -1,4 +1,4 @@
-// Show Working of Loops (with continue and break) and Control (if-else) Statement
+// Show Working of Loops (with continue and break) and Control (if-else and match) Statement
 
 fn for_loop(){
     // Loop from 1 to 5 (EXCLUDE "5")
@@ -60,9 +60,22 @@ fn if_else(){
     }
 }
 
+fn match_control(my_string: &str){
+    // It's just like the 'CASE' statement
+    match  my_string{
+        "Hello" => println!("Hello World"), // Mind the comma instead of simicolon
+        "Hi" => println!("Hi, Good Morning"),
+        _ => println!("You got something to say? Blah! Not interested") // '_' underscore is a wildcard for any other value or a default  
+    }
+}
+
 fn main(){
     for_loop();
     infinite_loop();
     while_loop();
     if_else();
+
+    match_control("Hello");
+    match_control("How are you?");
+
 }

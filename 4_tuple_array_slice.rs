@@ -1,6 +1,7 @@
 // Some things implement the Debug traint so we have to use :? to print them. For example, run time strings, array, vectors etc
 // Default iteration is [a..b] it means from index a (included) till b (excluded). Ex: 1..5 gives 1,2,3,4
 
+//IMPORTANT NOTE: Look at the slicing function closely, specially from line 91 to understand the concepts of Borrowing and Scoping
 
 fn array_example(){
     // You can increase or decrease the size of array AND they'll have only one type of data inside them unlike Python lists
@@ -52,19 +53,59 @@ fn vector_example(){
     // It is almost like Python list. MEans you can add, remove values from it. Only difference is that the datsa type should be of same type like array
     let mut vect: Vec<i32> = vec![0, 1,  10]; // It'll only have integers. If no data type is defined, it'll be inferred
 
-    let mut empty_vect: Vec<&str> = Vec::new(); // it means that create emty vector which is supposed to have strings in it
+    let empty_vect: Vec<&str> = Vec::new(); // it means that create emty vector which is supposed to have strings in it
 
-    vect.push(100); // Added a new element. Now it has 4 elements
+    vect.push(100); // Added a new element. Now it has 4 elements. It must be mutable for addition and removal
     vect.remove(0); // Removed the value at 0th index. Now it has again 3 values
 
-    vect[2] = -1; // Accessing elements can be done by the [] notation or the .get() method
-
+    vect[2] = -1; // Changinf the value. Vector must be mutable
+    
+    //Accessing elements can be done by the [] notation or the .get() method
     // Notice the Difference between .get() and [] methods of accesing. Also, for the .get(), we use {:?} for printing
     println!("Accessing Values of a Vector using vect.get(2) gives {:?} while using vect[2] gives {}", vect.get(2), vect[2]);
+}
+
+fn slice_example(){
+    // Slices are, well, literally "slices" which basically means a Contiguous subset of an iterator (Array, Vector, Strings)
+    let mut arr = [1,2,3,4,5,6,7,8,9,0]; // immutable
+    
+    // look at the "&". This is related to giving "ownership"
+    let slice_arr = &arr[2..5]; // Create a Subarray starting from Index 2 (inclusive) till Index 5 (excluded)
+
+    let slice_from_start = &arr[..5]; // It mean start from 0 (included) index till 5 (excluded)
+    let slice_till_end = &arr[4..]; // it means the slice now will start at 4 (included) and will go till END
+    
+    // You can not edit the mutable slice
+    println!("Sliced array starting from 2-5 is {:?} || From START-5 is {:?} || From 4-END is {:?}", slice_arr, slice_from_start, slice_till_end);
+
+    // Making slices mutable and changing values
+    let vector: Vec<i16> = vec![1,2,3,4,5,6,7,8,9]; //immutable vector
+    let mut mut_arr = [1,2,3,4,5,6,7,8,9,0]; // mutable array
+
+    let mut slice_1 = &arr[..5];
+    // slice_1[0] = -1; It'll produce error even though the Array is mutable and we have declared the slice as mutable
+    
+    let mut slice_2 = &vector[..5];
+    // slice_2[0] = -1; this will also give error
+
+    let mutable_slice = &mut arr[..5]; // Notice we did not use "let mut" here but on the right hand side "&mut"
+    // let slice_3 = &mut vector[..5];  //Can't be declared because the parent is immutable
+
+    mutable_slice[0] = -1;
+
+    println!("Mutable and changed slice: {:?}: ", mutable_slice); 
+
+    println!("{:?}", arr); // Look -> Original value is changed itself in the Original Array
+
+    // IMPORTANT NOTE: println!("{:?}, {:?}", mutable_slice, arr);  gives error but on seperate lines it does not
+    // Also, printing mutable_slice AFTER printing arr will give error due to Borrow rules
+    // This can be solved by SCOPING. Which means you put Line 91-96 within {}
+
 }
 
 fn main(){
     array_example();
     tuple_example();
     vector_example();
+    slice_example();
 }

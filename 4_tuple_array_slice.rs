@@ -103,9 +103,42 @@ fn slice_example(){
 
 }
 
+fn string_example(){
+    // Strings are of mainly 2 types. String (Read + Write MAnipulation) , &str (Read only)
+    // All the functions are here: https://doc.rust-lang.org/std/string/struct.String.html
+    // Reference Youtube video: https://www.youtube.com/watch?v=CpvzeyzgQdw
+
+    let mut str1: &str = "Mutable + Unmodifiable"; // even though it is mutable but it's characters can't be changed
+    str1 = "Still Mutable and still not modifiabe";
+    // str1[0]; 's'; // Can't be done
+
+    let mut str2: String =  String::from("Mutable");
+    // str2 = "Mutable + Modifiable"; // This will give error as new string is of type &str
+    str2 = "Mutable + Modifiable".to_string(); // Now it is if type String instead of &str
+
+    let mut empty_str = String::new(); // Empty String
+    empty_str.push('A'); // Push single Character
+    empty_str.push_str("dded String"); // Added to the existing String
+    let slice = &empty_str[0..5]; // Note it is borrowed operation
+
+    println!("Slice: {:?}", slice);
+
+    let mut replaced = empty_str.replace("Added", "Inserted"); // Returns a new string by Replacing sub string
+    println!("Original: {} || Replaced: {}", empty_str, replaced);
+
+    replaced.replace_range(9.., "new string"); // In PLACE Operation From 9th index to end of string replace
+    println!("'replaced' now has become: {}", replaced); // See, you don't need {:?} for String type but you do for &str
+
+
+    for ch in replaced.chars(){
+        println!("{}", ch);
+    }
+}
+
 fn main(){
     array_example();
     tuple_example();
     vector_example();
     slice_example();
+    string_example();
 }
